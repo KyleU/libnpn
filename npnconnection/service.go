@@ -15,6 +15,7 @@ import (
 
 // Function used to handle incoming messages
 type Handler func(s *Service, conn *Connection, svc string, cmd string, param json.RawMessage) error
+
 // Function used to handle incoming connections
 type ConnectEvent func(s *Service, conn *Connection) error
 
@@ -50,6 +51,7 @@ var systemStatus = &Status{ID: systemID, UserID: systemID, Username: "System Bro
 
 // Used by userless WASM messages
 var WASMID = uuid.FromStringOrNil("CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC")
+
 // Used by userless WASM messages
 var WASMProfile = npnuser.NewUserProfile(WASMID, "WebAssembly Client").ToProfile()
 var wasmStatus = &Status{ID: WASMID, UserID: WASMID, Username: "WebAssembly Client", ChannelSvc: npncore.KeySystem, ChannelID: &systemID}
@@ -91,7 +93,6 @@ func (s *Service) Count() int {
 	return len(s.connections)
 }
 
-
 // Used by userless WASM messages
 func (s *Service) SetWASMCallback(f func(string)) {
 	s.wasmCallback = f
@@ -131,7 +132,6 @@ func OnMessage(s *Service, connID uuid.UUID, message *Message) error {
 
 	return s.handler(s, c, message.Svc, message.Cmd, message.Param)
 }
-
 
 // Callback for when the backing connection is closed
 func (s *Service) OnClose(connID uuid.UUID) error {
