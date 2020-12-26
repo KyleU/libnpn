@@ -1,0 +1,10 @@
+/.vscode
+/.idea
+/.scannerwork
+/data
+/gen
+/tmp
+
+/ui/node_modules
+/ui/dist
+/web/assets/vendor/*.map
