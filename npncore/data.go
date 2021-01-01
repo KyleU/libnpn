@@ -121,3 +121,8 @@ func setPath(i interface{}, path []string, val interface{}) error {
 func (d Data) GetString(key string) string {
 	return fmt.Sprint(d.GetPath(key))
 }
+
+// Removes the value associated to the provided key
+func (d Data) Unset(s string) {
+	delete(d, s)
+}

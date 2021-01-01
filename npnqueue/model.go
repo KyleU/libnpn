@@ -10,6 +10,7 @@ import (
 	"github.com/kyleu/libnpn/npncore"
 )
 
+// A queue message
 type Message struct {
 	Topic   string            `json:"topic"`
 	Key     string            `json:"key"`
@@ -18,8 +19,10 @@ type Message struct {
 	Time    time.Time         `json:"time,omitempty"`
 }
 
+// Array helper
 type Messages []*Message
 
+// Queue configuration, loaded from environment
 type Config struct {
 	Addrs    []string
 	Username string
@@ -28,6 +31,7 @@ type Config struct {
 	Verbose  bool
 }
 
+// Loads the queue configuration from the environment
 func LoadConfig(verbose bool) *Config {
 	addrs := strings.Split(env("host", "pkc-4nym6.us-east-1.aws.confluent.cloud:9092"), ",")
 	u := env("username", "KSLPPOL5ACWKDXJK")

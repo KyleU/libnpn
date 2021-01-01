@@ -2,10 +2,8 @@ package npncontroller
 
 import (
 	"fmt"
-	"net/http"
-	"time"
-
 	"github.com/kyleu/libnpn/npnservice/auth"
+	"net/http"
 
 	"github.com/kyleu/libnpn/npnuser"
 
@@ -32,7 +30,8 @@ func Act(w http.ResponseWriter, r *http.Request, f func(ctx *npnweb.RequestConte
 			ctx.Title = "Error"
 		}
 		if IsContentTypeJSON(GetContentType(r)) {
-			_, _ = RespondJSON(w, "", errorResult{Status: npncore.KeyError, Message: err.Error()}, ctx.Logger)
+			rsp := NewJSONResponse(npncore.KeyError, err.Error(), r.URL.Path)
+			_, _ = RespondJSON(w, "", rsp, ctx.Logger)
 		} else {
 			_, _ = npntemplate.InternalServerError(npncore.GetErrorDetail(err), r, ctx, w)
 		}
@@ -53,7 +52,7 @@ func AuthAct(w http.ResponseWriter, r *http.Request, f func(*npnweb.RequestConte
 		if !allowed {
 			const msg = "you are not authorized to see this page"
 			if IsContentTypeJSON(GetContentType(r)) {
-				ae := JSONResponse{Status: "error", Message: msg, Path: r.URL.Path, Occurred: time.Now()}
+				ae := NewJSONResponse(npncore.KeyError, msg, r.URL.Path)
 				return RespondJSON(w, "", ae, ctx.Logger)
 			}
 			return FlashAndRedir(false, msg, "home", w, r, ctx)
@@ -66,11 +65,11 @@ func AuthAct(w http.ResponseWriter, r *http.Request, f func(*npnweb.RequestConte
 func AdminAct(w http.ResponseWriter, r *http.Request, f func(*npnweb.RequestContext) (string, error)) {
 	AuthAct(w, r, func(ctx *npnweb.RequestContext) (string, error) {
 		if ctx.Profile.Role != npnuser.RoleAdmin {
+			const msg = "you are not an administrator"
 			if IsContentTypeJSON(GetContentType(r)) {
-				ae := JSONResponse{Status: "error", Message: "you are not an administrator", Path: r.URL.Path, Occurred: time.Now()}
+				ae := NewJSONResponse(npncore.KeyError, msg, r.URL.Path)
 				return RespondJSON(w, "", ae, ctx.Logger)
 			}
-			const msg = "you're not an administrator, silly!"
 			return FlashAndRedir(false, msg, "home", w, r, ctx)
 		}
 		return f(ctx)

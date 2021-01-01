@@ -134,6 +134,7 @@ func (p *Params) Filtered(logger logur.Logger) *Params {
 	return p
 }
 
+// String representation of this Params, mostly used for debugging
 func (p *Params) String() string {
 	ol := ""
 	if p.Offset > 0 {

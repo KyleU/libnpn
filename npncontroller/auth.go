@@ -56,7 +56,7 @@ func AuthCallback(w http.ResponseWriter, r *http.Request) {
 		_, _ = ctx.App.User().SaveProfile(ctx.Profile)
 		prv := auth.ProviderFromString(mux.Vars(r)[npncore.KeyKey])
 
-		e := r.URL.Query().Get("error")
+		e := r.URL.Query().Get(npncore.KeyError)
 		if len(e) > 0 {
 			edesc := r.URL.Query().Get("error_description")
 			if len(edesc) > 0 {

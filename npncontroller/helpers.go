@@ -21,6 +21,11 @@ type JSONResponse struct {
 	Occurred time.Time `json:"occurred"`
 }
 
+// Constructs a new JSONResponse
+func NewJSONResponse(status string, msg string, path string) *JSONResponse {
+	return &JSONResponse{Status: status, Message: msg, Path: path, Occurred: time.Now()}
+}
+
 type errorResult struct {
 	Status  string
 	Message string
@@ -40,7 +45,7 @@ func EResp(err error, msgs ...string) (string, error) {
 	return "", errors.Wrap(err, msg)
 }
 
-// Responf with an error based on the provided message
+// Respond with an error based on the provided message
 func ENew(msg string) (string, error) {
 	return "", errors.New(msg)
 }

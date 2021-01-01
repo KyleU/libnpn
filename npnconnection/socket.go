@@ -115,7 +115,7 @@ func (s *Service) ReadLoop(connID uuid.UUID) error {
 
 		err = OnMessage(s, connID, m)
 		if err != nil {
-			_ = s.WriteLog(c.ID, "error", err.Error())
+			_ = s.WriteLog(c.ID, npncore.KeyError, err.Error())
 			s.Logger.Debug(fmt.Sprintf("error handling websocket message: %+v", err))
 			// return errors.Wrap(err, "error handling websocket message")
 		}

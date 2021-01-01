@@ -9,10 +9,13 @@ import (
 )
 
 var (
+	// List of allowed auth providers
 	RequiredAuthProviders = []string{}
+	// List of allowed user email domains
 	RequiredAuthDomains   = []string{}
 )
 
+// Checks if the provided user can sign in to the app
 func Check(s Service, userID uuid.UUID, logger logur.Logger) bool {
 	if (len(RequiredAuthProviders) == 0) && (len(RequiredAuthDomains) == 0) {
 		return true

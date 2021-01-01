@@ -8,12 +8,14 @@ import (
 	"github.com/kyleu/libnpn/npncore"
 )
 
+// Publishes messages to a queue
 type Publisher struct {
 	Topic  string
 	Addrs  []string
 	writer sarama.SyncProducer
 }
 
+// Constructor
 func NewPublisher(cfg *Config) (*Publisher, error) {
 	config := makeSaramaConfig(cfg.Username, cfg.Password, cfg.Verbose)
 	producer, err := sarama.NewSyncProducer(cfg.Addrs, config)
@@ -24,6 +26,7 @@ func NewPublisher(cfg *Config) (*Publisher, error) {
 	return &Publisher{Topic: cfg.Topic, Addrs: cfg.Addrs, writer: producer}, nil
 }
 
+// Write a message to the queue
 func (c *Publisher) Write(ctx context.Context, key string, m *Message) error {
 	json := npncore.ToJSON(m.Payload, nil)
 	hd := make([]sarama.RecordHeader, 0, len(m.Headers))
