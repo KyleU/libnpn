@@ -27,17 +27,17 @@ replace github.com/kyleu/libnpn/npnuser => ./npnuser
 replace github.com/kyleu/libnpn/npnweb => ./npnweb
 
 require (
-	github.com/kyleu/libnpn/npnconnection v0.0.0 // npn
-	github.com/kyleu/libnpn/npncontroller v0.0.0 // npn
-	github.com/kyleu/libnpn/npncore v0.0.0 // npn
-	github.com/kyleu/libnpn/npndatabase v0.0.0 // npn
-	github.com/kyleu/libnpn/npnqueue v0.0.0 // npn
-	github.com/kyleu/libnpn/npnscript v0.0.0 // npn
-	github.com/kyleu/libnpn/npnservice v0.0.0 // npn
-	github.com/kyleu/libnpn/npnservice-db v0.0.0 // npn
-	github.com/kyleu/libnpn/npnservice-fs v0.0.0 // npn
-	github.com/kyleu/libnpn/npntemplate v0.0.0 // npn
-	github.com/kyleu/libnpn/npnuser v0.0.0 // npn
-	github.com/kyleu/libnpn/npnweb v0.0.0 // npn
+	github.com/kyleu/libnpn/npnconnection v0.0.1 // npn
+	github.com/kyleu/libnpn/npncontroller v0.0.1 // npn
+	github.com/kyleu/libnpn/npncore v0.0.1 // npn
+	github.com/kyleu/libnpn/npndatabase v0.0.1 // npn
+	github.com/kyleu/libnpn/npnqueue v0.0.1 // npn
+	github.com/kyleu/libnpn/npnscript v0.0.1 // npn
+	github.com/kyleu/libnpn/npnservice v0.0.1 // npn
+	github.com/kyleu/libnpn/npnservice-db v0.0.1 // npn
+	github.com/kyleu/libnpn/npnservice-fs v0.0.1 // npn
+	github.com/kyleu/libnpn/npntemplate v0.0.1 // npn
+	github.com/kyleu/libnpn/npnuser v0.0.1 // npn
+	github.com/kyleu/libnpn/npnweb v0.0.1 // npn
 	logur.dev/logur v0.16.2
 )

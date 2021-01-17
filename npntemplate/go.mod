@@ -5,11 +5,11 @@ go 1.15
 require (
 	cloud.google.com/go v0.65.0 // indirect
 	github.com/gofrs/uuid v3.3.0+incompatible
-	github.com/kyleu/libnpn/npnconnection v0.0.0 // npn
-	github.com/kyleu/libnpn/npncore v0.0.0 // npn
-	github.com/kyleu/libnpn/npnservice v0.0.0 // npn
-	github.com/kyleu/libnpn/npnuser v0.0.0 // npn
-	github.com/kyleu/libnpn/npnweb v0.0.0 // npn
+	github.com/kyleu/libnpn/npnconnection v0.0.1 // npn
+	github.com/kyleu/libnpn/npncore v0.0.1 // npn
+	github.com/kyleu/libnpn/npnservice v0.0.1 // npn
+	github.com/kyleu/libnpn/npnuser v0.0.1 // npn
+	github.com/kyleu/libnpn/npnweb v0.0.1 // npn
 	github.com/shiyanhui/hero v0.0.2
 	logur.dev/logur v0.16.2
 )
