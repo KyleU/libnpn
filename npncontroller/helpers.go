@@ -27,8 +27,8 @@ func NewJSONResponse(status string, msg string, path string) *JSONResponse {
 }
 
 type errorResult struct {
-	Status  string
-	Message string
+	Status  string `json:"status"`
+	Message string `json:"message"`
 }
 
 // Helper for transforming the result of a template

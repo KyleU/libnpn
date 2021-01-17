@@ -29,6 +29,7 @@ func Act(w http.ResponseWriter, r *http.Request, f func(ctx *npnweb.RequestConte
 		if len(ctx.Title) == 0 {
 			ctx.Title = "Error"
 		}
+		w.WriteHeader(http.StatusInternalServerError)
 		if IsContentTypeJSON(GetContentType(r)) {
 			rsp := NewJSONResponse(npncore.KeyError, err.Error(), r.URL.Path)
 			_, _ = RespondJSON(w, "", rsp, ctx.Logger)

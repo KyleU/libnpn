@@ -12,6 +12,8 @@ replace github.com/kyleu/libnpn/npndatabase => ./npndatabase
 
 replace github.com/kyleu/libnpn/npnqueue => ./npnqueue
 
+replace github.com/kyleu/libnpn/npnscript => ./npnscript
+
 replace github.com/kyleu/libnpn/npnservice => ./npnservice
 
 replace github.com/kyleu/libnpn/npnservice-db => ./npnservice-db
@@ -30,10 +32,12 @@ require (
 	github.com/kyleu/libnpn/npncore v0.0.1 // npn
 	github.com/kyleu/libnpn/npndatabase v0.0.1 // npn
 	github.com/kyleu/libnpn/npnqueue v0.0.1 // npn
+	github.com/kyleu/libnpn/npnscript v0.0.1 // npn
 	github.com/kyleu/libnpn/npnservice v0.0.1 // npn
 	github.com/kyleu/libnpn/npnservice-db v0.0.1 // npn
 	github.com/kyleu/libnpn/npnservice-fs v0.0.1 // npn
 	github.com/kyleu/libnpn/npntemplate v0.0.1 // npn
 	github.com/kyleu/libnpn/npnuser v0.0.1 // npn
 	github.com/kyleu/libnpn/npnweb v0.0.1 // npn
+	logur.dev/logur v0.16.2
 )

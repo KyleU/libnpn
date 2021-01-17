@@ -48,7 +48,6 @@ func NotFound(r *http.Request, ctx *npnweb.RequestContext, w io.Writer) (int, er
     <div class="uk-card uk-card-body uk-card-default">
       <h3 class="uk-card-title">404 Not Found</h3>
       <p>We can't find a page at this location.</p>
-      <p>Sorry.</p>
     </div>
   </div>
 </div>

@@ -11,7 +11,12 @@ type Service struct {
 }
 
 func NewService(logger logur.Logger) *Service {
-	l := lua.NewState()
+	opts := lua.Options{
+		SkipOpenLibs:        true,
+		IncludeGoStackTrace: true,
+		MinimizeStackMemory: false,
+	}
+	l := lua.NewState(opts)
 	return &Service{l: l, logger: logger}
 }
 

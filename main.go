@@ -3,6 +3,9 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"github.com/kyleu/libnpn/npnscript/js"
+	"github.com/kyleu/libnpn/npnscript/lua"
+	"logur.dev/logur"
 	"os"
 
 	"github.com/kyleu/libnpn/npnservice-db/authdb"
@@ -21,6 +24,8 @@ import (
 )
 
 func main() {
+	logger := logur.NewNoopLogger()
+
 	_ = npnconnection.Message{}
 
 	npncontroller.InitMime()
@@ -43,5 +48,27 @@ func main() {
 	rc := npnweb.RequestContext{
 		Title: "Hello!",
 	}
+
+	_ = lua.Service{}
+	_ = js.Service{}
+
+	err := testbed(logger)
+	if err != nil {
+		panic(err)
+	}
+
 	println(fmt.Sprintf("Process: %v - %v", os.Getpid(), rc.Title))
+}
+
+func testbed(logger logur.Logger) error {
+	// hangOnASec()
+	println("Testbed!")
+	ret := "OK"
+	println("TESTBED RESULT: " + ret)
+	return nil
+}
+
+func hangOnASec() {
+	println("Press [Enter]")
+	_, _ = fmt.Scanln()
 }
