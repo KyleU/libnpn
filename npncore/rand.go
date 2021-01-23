@@ -17,3 +17,8 @@ func RandomString(length int) string {
 	}
 	return string(b)
 }
+
+// Returns a random integer
+func RandomInt(maxInclusive int) int {
+	return seededRand.Intn(maxInclusive)
+}
