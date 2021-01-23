@@ -22,7 +22,9 @@ func (s *Service) Register(profile *npnuser.Profile, c *websocket.Conn) (uuid.UU
 	defer s.connectionsMu.Unlock()
 
 	s.connections[conn.ID] = conn
-	return conn.ID, nil
+
+	err := s.onOpen(s, conn)
+	return conn.ID, err
 }
 
 // Removes a Connection from this Service

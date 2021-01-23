@@ -153,5 +153,5 @@ func (s *Service) OnClose(connID uuid.UUID) error {
 	if !ok {
 		return invalidConnection(connID)
 	}
-	return s.onOpen(s, c)
+	return s.onClose(s, c)
 }
