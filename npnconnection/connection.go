@@ -12,10 +12,10 @@ import (
 // Registers a new Connection for this Service using the provided npnuser.Profile and websocket.Conn
 func (s *Service) Register(profile *npnuser.Profile, c *websocket.Conn) (uuid.UUID, error) {
 	conn := &Connection{
-		ID:      npncore.UUID(),
-		Profile: profile,
+		ID:       npncore.UUID(),
+		Profile:  profile,
 		Channels: nil,
-		socket:  c,
+		socket:   c,
 	}
 
 	s.connectionsMu.Lock()

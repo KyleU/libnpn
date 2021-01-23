@@ -12,7 +12,7 @@ var (
 	// List of allowed auth providers
 	RequiredAuthProviders = []string{}
 	// List of allowed user email domains
-	RequiredAuthDomains   = []string{}
+	RequiredAuthDomains = []string{}
 )
 
 // Checks if the provided user can sign in to the app

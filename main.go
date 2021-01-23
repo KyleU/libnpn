@@ -3,10 +3,11 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"os"
+
 	"github.com/kyleu/libnpn/npnscript/js"
 	"github.com/kyleu/libnpn/npnscript/lua"
 	"logur.dev/logur"
-	"os"
 
 	"github.com/kyleu/libnpn/npnservice-db/authdb"
 	"github.com/kyleu/libnpn/npnservice-fs/authfs"

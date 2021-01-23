@@ -1,8 +1,9 @@
 package npnconnection
 
 import (
-	"github.com/gofrs/uuid"
 	"time"
+
+	"github.com/gofrs/uuid"
 )
 
 type Channel struct {

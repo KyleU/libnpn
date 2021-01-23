@@ -1,8 +1,8 @@
 package npnconnection
 
 import (
-	"github.com/kyleu/libnpn/npncore"
 	"github.com/gofrs/uuid"
+	"github.com/kyleu/libnpn/npncore"
 )
 
 // Returns membership details for the provided Channel

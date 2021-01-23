@@ -2,8 +2,9 @@ package npncontroller
 
 import (
 	"fmt"
-	"github.com/kyleu/libnpn/npnservice/auth"
 	"net/http"
+
+	"github.com/kyleu/libnpn/npnservice/auth"
 
 	"github.com/kyleu/libnpn/npnuser"
 
