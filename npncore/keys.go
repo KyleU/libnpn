@@ -16,6 +16,7 @@ const (
 	KeyCategory   = "category"
 	KeyChoice     = "choice"
 	KeyCollection = "collection"
+	KeyChannel    = "channel"
 	KeyConnection = "connection"
 	KeyContent    = "content"
 	KeyCreated    = "created"

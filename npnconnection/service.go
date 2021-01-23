@@ -23,7 +23,7 @@ type ConnectEvent func(s *Service, conn *Connection) error
 type Service struct {
 	connections   map[uuid.UUID]*Connection
 	connectionsMu sync.Mutex
-	channels      map[Channel][]uuid.UUID
+	channels      map[string]*Channel
 	channelsMu    sync.Mutex
 	Logger        logur.Logger
 	onOpen        ConnectEvent
@@ -38,7 +38,7 @@ func NewService(logger logur.Logger, onOpen ConnectEvent, handler Handler, onClo
 	logger = logur.WithFields(logger, map[string]interface{}{npncore.KeyService: npncore.KeySocket})
 	return &Service{
 		connections: make(map[uuid.UUID]*Connection),
-		channels:    make(map[Channel][]uuid.UUID),
+		channels:    make(map[string]*Channel),
 		Logger:      logger,
 		handler:     handler,
 		onOpen:      onOpen,
@@ -47,18 +47,18 @@ func NewService(logger logur.Logger, onOpen ConnectEvent, handler Handler, onClo
 }
 
 var systemID = uuid.FromStringOrNil("FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF")
-var systemStatus = &Status{ID: systemID, UserID: systemID, Username: "System Broadcast", ChannelSvc: npncore.KeySystem, ChannelID: &systemID}
+var systemStatus = &Status{ID: systemID, UserID: systemID, Username: "System Broadcast", Channels: []string{systemID.String()}}
 
 // Used by userless WASM messages
 var WASMID = uuid.FromStringOrNil("CCCCCCCC-CCCC-CCCC-CCCC-CCCCCCCCCCCC")
 
 // Used by userless WASM messages
 var WASMProfile = npnuser.NewUserProfile(WASMID, "WebAssembly Client").ToProfile()
-var wasmStatus = &Status{ID: WASMID, UserID: WASMID, Username: "WebAssembly Client", ChannelSvc: npncore.KeySystem, ChannelID: &systemID}
+var wasmStatus = &Status{ID: WASMID, UserID: WASMID, Username: "WebAssembly Client", Channels: []string{systemID.String()}}
 var wasmConnection = &Connection{ID: WASMID, Profile: WASMProfile}
 
 // Returns an array of Connection statuses based on the parameters
-func (s *Service) List(params *npncore.Params) Statuses {
+func (s *Service) UserList(params *npncore.Params) Statuses {
 	params = npncore.ParamsWithDefaultOrdering(npncore.KeyConnection, params)
 	ret := make(Statuses, 0)
 	ret = append(ret, systemStatus)
@@ -66,6 +66,20 @@ func (s *Service) List(params *npncore.Params) Statuses {
 	for _, conn := range s.connections {
 		if idx >= params.Offset && (params.Limit == 0 || idx < params.Limit) {
 			ret = append(ret, conn.ToStatus())
+		}
+		idx++
+	}
+	return ret
+}
+
+// Returns an array of channels based on the parameters
+func (s *Service) ChannelList(params *npncore.Params) []string {
+	params = npncore.ParamsWithDefaultOrdering(npncore.KeyChannel, params)
+	ret := make([]string, 0)
+	var idx = 0
+	for conn, _ := range s.channels {
+		if idx >= params.Offset && (params.Limit == 0 || idx < params.Limit) {
+			ret = append(ret, conn)
 		}
 		idx++
 	}
@@ -123,14 +137,14 @@ func OnMessage(s *Service, connID uuid.UUID, message *Message) error {
 		return nil
 	}
 	if connID == WASMID {
-		return s.handler(s, wasmConnection, message.Svc, message.Cmd, message.Param)
+		return s.handler(s, wasmConnection, message.Channel, message.Cmd, message.Param)
 	}
 	c, ok := s.connections[connID]
 	if !ok {
 		return invalidConnection(connID)
 	}
 
-	return s.handler(s, c, message.Svc, message.Cmd, message.Param)
+	return s.handler(s, c, message.Channel, message.Cmd, message.Param)
 }
 
 // Callback for when the backing connection is closed

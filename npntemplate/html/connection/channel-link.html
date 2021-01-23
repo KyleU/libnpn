@@ -1,6 +1,8 @@
-<%: func Channel(svc string, id *uuid.UUID, ctx *npnweb.RequestContext, buffer *bytes.Buffer) %>
-<% if id == nil { %>
+<%: func Channel(channels []string, ctx *npnweb.RequestContext, buffer *bytes.Buffer) %>
+<% if len(channels) == 0 { %>
   &lt;nil&gt;
 <% } else { %>
-  <a href="<%= ctx.Route(npnweb.AdminLink(svc, npncore.KeyDetail), npncore.KeyID, id.String()) %>"><%= svc %>:<% UUID(id, buffer) %></a>
+  <% for _, x := range channels { %>
+    <a href="<%= ctx.Route(npnweb.AdminLink(npncore.KeyChannel), npncore.KeyID, x) %>"><%= x %></a>
+  <% } %>
 <% } %>

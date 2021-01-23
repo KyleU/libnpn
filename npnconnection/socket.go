@@ -54,7 +54,7 @@ func (s *Service) WriteLog(connID uuid.UUID, level string, msg string, ctx ...st
 func (s *Service) Broadcast(message *Message, except ...uuid.UUID) error {
 	// s.Logger.Debug(fmt.Sprintf("broadcasting message [%v::%v] to [%v] connections", message.Svc, message.Cmd, len(s.connections)))
 	for id, _ := range s.connections {
-		if !contains(except, id) {
+		if !containsUUID(except, id) {
 			go func() {
 				_ = s.Write(id, npncore.ToJSON(message, s.Logger))
 			}()
@@ -69,15 +69,15 @@ func (s *Service) BroadcastLog(level string, msg string, ctx ...string) error {
 }
 
 // Write a Message to the provided Channel
-func (s *Service) WriteChannel(channel Channel, message *Message, except ...uuid.UUID) error {
+func (s *Service) WriteChannel(channel string, message *Message, except ...uuid.UUID) error {
 	conns, ok := s.channels[channel]
 	if !ok {
 		return nil
 	}
 
 	// s.Logger.Debug(fmt.Sprintf("sending message [%v::%v] to [%v] connections", message.Svc, message.Cmd, len(conns)))
-	for _, conn := range conns {
-		if !contains(except, conn) {
+	for _, conn := range conns.MemberIDs {
+		if !containsUUID(except, conn) {
 			connID := conn
 
 			go func() {
@@ -98,7 +98,7 @@ func (s *Service) ReadLoop(connID uuid.UUID) error {
 	defer func() {
 		_ = c.socket.Close()
 		_, _ = s.Disconnect(connID)
-		// s.Logger.Debug(fmt.Sprintf("closed websocket [%v]", connID.String()))
+		s.Logger.Debug(fmt.Sprintf("closed websocket [%v]", connID.String()))
 	}()
 
 	for {
@@ -107,17 +107,16 @@ func (s *Service) ReadLoop(connID uuid.UUID) error {
 			break
 		}
 
-		m := &Message{}
-		err = json.Unmarshal(message, m)
+		var m Message
+		err = json.Unmarshal(message, &m)
 		if err != nil {
 			return errors.Wrap(err, "error decoding websocket message")
 		}
 
-		err = OnMessage(s, connID, m)
+		err = OnMessage(s, connID, &m)
 		if err != nil {
-			_ = s.WriteLog(c.ID, npncore.KeyError, err.Error())
-			s.Logger.Debug(fmt.Sprintf("error handling websocket message: %+v", err))
-			// return errors.Wrap(err, "error handling websocket message")
+			_ = s.WriteMessage(c.ID, NewMessage(npncore.KeySystem, npncore.KeyError, err.Error()))
+			return errors.Wrap(err, "error handling websocket message")
 		}
 	}
 	return nil

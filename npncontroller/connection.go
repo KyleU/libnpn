@@ -39,7 +39,7 @@ func ConnectionList(w http.ResponseWriter, r *http.Request) {
 		ctx.Breadcrumbs = AdminBC(ctx, npncore.KeyConnection, npncore.Plural(npncore.KeyConnection))
 
 		p := npnweb.ParamSetFromRequest(r)
-		connections := globalSvc.List(p.Get(npncore.KeySocket, ctx.Logger))
+		connections := globalSvc.UserList(p.Get(npncore.KeySocket, ctx.Logger))
 		return T(npntemplate.ConnectionList(connections, p, ctx, w))
 	})
 }

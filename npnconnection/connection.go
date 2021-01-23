@@ -14,9 +14,7 @@ func (s *Service) Register(profile *npnuser.Profile, c *websocket.Conn) (uuid.UU
 	conn := &Connection{
 		ID:      npncore.UUID(),
 		Profile: profile,
-		Svc:     npncore.KeySystem,
-		ModelID: nil,
-		Channel: nil,
+		Channels: nil,
 		socket:  c,
 	}
 
@@ -35,11 +33,13 @@ func (s *Service) Disconnect(connID uuid.UUID) (bool, error) {
 	}
 	left := false
 
-	if conn.Channel != nil {
+	if conn.Channels != nil {
 		left = true
-		err := s.Leave(connID, *conn.Channel)
-		if err != nil {
-			return left, errors.Wrap(err, "error leaving channel ["+conn.Channel.String()+"]")
+		for _, x := range conn.Channels {
+			err := s.Leave(connID, x)
+			if err != nil {
+				return left, errors.Wrap(err, "error leaving channel ["+x+"]")
+			}
 		}
 	}
 
