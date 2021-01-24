@@ -78,5 +78,5 @@ var DefaultSettings = &UserSettings{
 	MenuF: "#ffffff",
 	MenuL: "#cccccc",
 	BodyB: "#fcfff5",
-	BodyL: "#444",
+	BodyL: "#2f657f",
 }

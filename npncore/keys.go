@@ -33,6 +33,7 @@ const (
 	KeyHTML       = "html"
 	KeyID         = "id"
 	KeyIdx        = "idx"
+	KeyImport     = "import"
 	KeyJSON       = "json"
 	KeyKey        = "key"
 	KeyLog        = "log"
