@@ -38,7 +38,7 @@ func (s *Service) Disconnect(connID uuid.UUID) (bool, error) {
 	if conn.Channels != nil {
 		left = true
 		for _, x := range conn.Channels {
-			err := s.Leave(connID, x)
+			_, err := s.Leave(connID, x)
 			if err != nil {
 				return left, errors.Wrap(err, "error leaving channel ["+x+"]")
 			}

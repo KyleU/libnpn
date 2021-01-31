@@ -20,10 +20,10 @@ func newChannel(key string) *Channel {
 }
 
 // Adds a Connection to this Channel
-func (s *Service) Join(connID uuid.UUID, ch string) error {
+func (s *Service) Join(connID uuid.UUID, ch string) (bool, error) {
 	conn, ok := s.connections[connID]
 	if !ok {
-		return invalidConnection(connID)
+		return false, invalidConnection(connID)
 	}
 	if !chanContains(conn.Channels, ch) {
 		conn.Channels = append(conn.Channels, ch)
@@ -32,22 +32,24 @@ func (s *Service) Join(connID uuid.UUID, ch string) error {
 	s.channelsMu.Lock()
 	defer s.channelsMu.Unlock()
 
+	created := false
 	curr, ok := s.channels[ch]
 	if !ok {
 		curr = newChannel(ch)
 		s.channels[ch] = curr
+		created = true
 	}
 	if !containsUUID(curr.MemberIDs, connID) {
 		curr.MemberIDs = append(curr.MemberIDs, connID)
 	}
-	return nil
+	return created, nil
 }
 
 // Removes a Connection from this Channel
-func (s *Service) Leave(connID uuid.UUID, ch string) error {
+func (s *Service) Leave(connID uuid.UUID, ch string) (bool, error) {
 	conn, ok := s.connections[connID]
 	if !ok {
-		return invalidConnection(connID)
+		return false, invalidConnection(connID)
 	}
 	conn.Channels = chanWithout(conn.Channels, ch)
 
@@ -67,15 +69,11 @@ func (s *Service) Leave(connID uuid.UUID, ch string) error {
 
 	if len(filtered) == 0 {
 		delete(s.channels, ch)
-		return nil
+		return true, nil
 	}
 
-	if len(filtered) == 0 {
-		delete(s.channels, ch)
-		return nil
-	}
 	s.channels[ch].MemberIDs = filtered
-	return s.sendOnlineUpdate(ch, conn.ID, conn.Profile.UserID, false)
+	return false, s.sendOnlineUpdate(ch, conn.ID, conn.Profile.UserID, false)
 }
 
 func containsString(s []string, e string) bool {

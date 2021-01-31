@@ -4,6 +4,7 @@ import (
 	"encoding/csv"
 	"fmt"
 	"net/url"
+	"strconv"
 	"strings"
 
 	"emperror.dev/errors"
@@ -60,17 +61,28 @@ func getPath(i interface{}, path []string) interface{} {
 	if len(path) == 0 {
 		return i
 	}
+	k := path[0]
 	switch t := i.(type) {
 	case Data:
-		ret, ok := t[path[0]]
+		ret, ok := t[k]
 		if !ok {
 			return nil
 		}
 		return getPath(ret, path[1:])
 	case map[string]interface{}:
-		ret, ok := t[path[0]]
+		ret, ok := t[k]
 		if !ok {
 			return nil
+		}
+		return getPath(ret, path[1:])
+	case []interface{}:
+		i, err := strconv.Atoi(k)
+		if err != nil {
+			return nil
+		}
+		var ret interface{}
+		if len(t) > i {
+			ret = t[i]
 		}
 		return getPath(ret, path[1:])
 	default:
