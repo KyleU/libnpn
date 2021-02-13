@@ -13,16 +13,33 @@ import (
 
 // Common utility routes, for viewing the installed routes and modules, and providing sitemap.xml, OPTIONS, and 404 handlers
 func RoutesUtil(app npnweb.AppInfo, r *mux.Router) {
+	RoutesRouteList(app, r)
+	RoutesModuleList(app, r)
+	RoutesSitemap(app, r)
+	RoutesOptions(app, r)
+	RoutesNotFound(app, r)
+}
+
+func RoutesRouteList(app npnweb.AppInfo, r *mux.Router) {
 	rts := r.Path(routes.Path(npncore.KeyRoutes)).Subrouter()
 	rts.Methods(http.MethodGet).Handler(routes.AddContext(r, app, http.HandlerFunc(RouteList))).Name(routes.Name(npncore.KeyRoutes))
+}
 
+func RoutesModuleList(app npnweb.AppInfo, r *mux.Router) {
 	modules := r.Path(routes.Path(npncore.KeyModules)).Subrouter()
 	modules.Methods(http.MethodGet).Handler(routes.AddContext(r, app, http.HandlerFunc(ModuleList))).Name(routes.Name(npncore.KeyModules))
+}
 
+func RoutesSitemap(app npnweb.AppInfo, r *mux.Router) {
 	sitemap := r.Path(routes.Path("sitemap.xml")).Subrouter()
 	sitemap.Methods(http.MethodGet).Handler(routes.AddContext(r, app, http.HandlerFunc(SitemapXML))).Name(routes.Name("sitemap"))
+}
 
+func RoutesOptions(app npnweb.AppInfo, r *mux.Router) {
 	r.PathPrefix("").Methods(http.MethodOptions).Handler(routes.AddContext(r, app, http.HandlerFunc(Options)))
+}
+
+func RoutesNotFound(app npnweb.AppInfo, r *mux.Router) {
 	r.PathPrefix("").Handler(routes.AddContext(r, app, http.HandlerFunc(NotFound)))
 }
 

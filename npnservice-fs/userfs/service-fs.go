@@ -90,7 +90,7 @@ func (s *ServiceFilesystem) GetByID(userID uuid.UUID, addIfMissing bool) *user.S
 
 func (s *ServiceFilesystem) SaveProfile(prof *npnuser.UserProfile) (*npnuser.UserProfile, error) {
 	if !s.Multiuser {
-		prof.UserID = npnuser.SystemUserID
+		prof.UserID = uuid.UUID{}
 	}
 	err := s.files.WriteFile(s.filenameFor(prof.UserID), npncore.ToJSONBytes(prof.ToProfile(), s.logger, true), true)
 	if err != nil {

@@ -6,7 +6,7 @@ import (
 )
 
 // Global ID used by the system UserProfile
-var SystemUserID = uuid.FromStringOrNil("00000000-0000-0000-0000-000000000000")
+var SystemUserID = uuid.FromStringOrNil("ffffffff-ffff-ffff-ffff-ffffffffffff")
 
 // Represent's a user and their settings
 type UserProfile struct {

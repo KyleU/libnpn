@@ -58,7 +58,7 @@ var wasmStatus = &Status{ID: WASMID, UserID: WASMID, Username: "WebAssembly Clie
 var wasmConnection = &Connection{ID: WASMID, Profile: WASMProfile}
 
 // Returns an array of Connection statuses based on the parameters
-func (s *Service) UserList(params *npncore.Params) Statuses {
+func (s *Service) List(params *npncore.Params) Statuses {
 	params = npncore.ParamsWithDefaultOrdering(npncore.KeyConnection, params)
 	ret := make(Statuses, 0)
 	ret = append(ret, systemStatus)

@@ -29,7 +29,7 @@ func serializeUUID(value interface{}) interface{} {
 func unserializeUUID(value interface{}) interface{} {
 	switch value := value.(type) {
 	case []byte:
-		u := uuid.UUID{}
+		var u *uuid.UUID
 		err := u.UnmarshalText(value)
 		if err != nil {
 			return nil
@@ -53,7 +53,7 @@ func unserializeUUID(value interface{}) interface{} {
 var ScalarUUID = graphql.NewScalar(graphql.ScalarConfig{
 	Name: "UUID",
 	Description: "The `UUID` scalar type represents a 128-bit value, represented as hex-encoded " +
-		"character sequences, such as [00000000-0000-0000-0123-456789ABCDEF].",
+		"character sequences, such as [FEDCBA98-7654-3210-0123-456789ABCDEF].",
 	Serialize:  serializeUUID,
 	ParseValue: unserializeUUID,
 	ParseLiteral: func(valueAST ast.Value) interface{} {
