@@ -1,13 +1,15 @@
 package npnqueue
 
 import (
-	"log"
+	"encoding/json"
 	"os"
 	"strings"
 	"time"
 
-	"github.com/Shopify/sarama"
 	"github.com/kyleu/libnpn/npncore"
+	"github.com/sirupsen/logrus"
+
+	"github.com/Shopify/sarama"
 )
 
 // A queue message
@@ -15,7 +17,7 @@ type Message struct {
 	Topic   string            `json:"topic"`
 	Key     string            `json:"key"`
 	Headers map[string][]byte `json:"headers,omitempty"`
-	Payload string            `json:"payload"`
+	Payload json.RawMessage   `json:"payload"`
 	Time    time.Time         `json:"time,omitempty"`
 }
 
@@ -24,6 +26,7 @@ type Messages []*Message
 
 // Queue configuration, loaded from environment
 type Config struct {
+	Secure   bool
 	Addrs    []string
 	Username string
 	Password string
@@ -32,12 +35,13 @@ type Config struct {
 }
 
 // Loads the queue configuration from the environment
-func LoadConfig(verbose bool) *Config {
-	addrs := strings.Split(env("host", "pkc-4nym6.us-east-1.aws.confluent.cloud:9092"), ",")
-	u := env("username", "KSLPPOL5ACWKDXJK")
-	p := env("password", "TxMxQY091Tz53E7t4VBPl/nI4ZFCVUzvViX/S4dLKEcu2JkcIuGdM/zE5mPtaXhB")
-	topic := env("topic", "Nuevo")
-	return &Config{Addrs: addrs, Username: u, Password: p, Topic: topic, Verbose: verbose}
+func LoadConfig(verbose bool, defaultTopic string) *Config {
+	secure := env("secure", "true") != "false"
+	addrs := strings.Split(env("host", "localhost:9092"), ",")
+	u := env("username", "")
+	p := env("password", "")
+	topic := env("topic", defaultTopic)
+	return &Config{Secure: secure, Addrs: addrs, Username: u, Password: p, Topic: topic, Verbose: verbose}
 }
 
 func env(key string, dflt string) string {
@@ -48,17 +52,19 @@ func env(key string, dflt string) string {
 	return dflt
 }
 
-func makeSaramaConfig(username string, password string, verbose bool) *sarama.Config {
+func makeSaramaConfig(secure bool, username string, password string, sasl bool, verbose bool, logger *logrus.Logger) *sarama.Config {
 	if verbose {
-		sarama.Logger = log.New(os.Stdout, "[sarama] ", log.LstdFlags)
+		sarama.Logger = logger
 	}
 
 	config := sarama.NewConfig()
-	config.ClientID = "nuevo"
-	config.Net.SASL.Enable = true
-	config.Net.SASL.User = username
-	config.Net.SASL.Password = password
-	config.Net.TLS.Enable = true
+	config.ClientID = npncore.AppKey
+	if len(username) > 0 && username != "null" {
+		config.Net.SASL.Enable = sasl
+		config.Net.SASL.User = username
+		config.Net.SASL.Password = password
+	}
+	config.Net.TLS.Enable = secure
 	config.Producer.Return.Successes = true
 	return config
 }

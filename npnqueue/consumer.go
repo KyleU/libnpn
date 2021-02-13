@@ -2,8 +2,11 @@ package npnqueue
 
 import (
 	"context"
+	"fmt"
+	"time"
 
 	"github.com/Shopify/sarama"
+	"github.com/sirupsen/logrus"
 	"logur.dev/logur"
 )
 
@@ -15,17 +18,19 @@ type Consumer struct {
 	Group   string
 	Handler *ConsumeHelper
 	Config  *sarama.Config
+	Count   int
+	Last    time.Time
 	logger  logur.Logger
 }
 
 // Creates a new Consumer from the provided ConsumeHelper
-func NewConsumer(cfg *Config, group string, handler *ConsumeHelper) (*Consumer, error) {
-	config := makeSaramaConfig(cfg.Username, cfg.Password, cfg.Verbose)
+func NewConsumer(cfg *Config, group string, handler *ConsumeHelper, logger logur.Logger, logr *logrus.Logger) (*Consumer, error) {
+	config := makeSaramaConfig(cfg.Secure, cfg.Username, cfg.Password, cfg.Secure, cfg.Verbose, logr)
 	r, err := sarama.NewConsumerGroup(cfg.Addrs, group, config)
 	if err != nil {
 		return nil, err
 	}
-	return &Consumer{Topic: cfg.Topic, Addrs: cfg.Addrs, Reader: r, Group: group, Config: config, Handler: handler}, nil
+	return &Consumer{Topic: cfg.Topic, Addrs: cfg.Addrs, Reader: r, Group: group, Handler: handler, Config: config, logger: logger}, nil
 }
 
 // Enters a loop that reads messages until the connection is closed
@@ -34,7 +39,7 @@ func (c *Consumer) ReadLoop(onMessage func(msg *Message), onError func(e error))
 		for {
 			err := c.Read(context.Background())
 			if err != nil {
-				panic(err)
+				c.logger.Error(fmt.Sprintf("error reading: %+v", err))
 			}
 			c.Reset()
 		}
@@ -43,6 +48,8 @@ func (c *Consumer) ReadLoop(onMessage func(msg *Message), onError func(e error))
 	for {
 		select {
 		case msg := <-c.Handler.Consumers:
+			c.Count += 1
+			c.Last = time.Now()
 			go onMessage(msg)
 		case err := <-c.Handler.Errors:
 			go onError(err)
@@ -104,7 +111,7 @@ func (c *ConsumeHelper) ConsumeClaim(session sarama.ConsumerGroupSession, claim 
 			Topic:   m.Topic,
 			Key:     string(m.Key),
 			Headers: hd,
-			Payload: string(m.Value),
+			Payload: m.Value,
 			Time:    m.Timestamp,
 		}
 		c.Consumers <- msg
