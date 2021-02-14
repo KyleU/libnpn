@@ -1,12 +1,12 @@
 package authfs
 
 import (
+	"github.com/sirupsen/logrus"
 	"strings"
 
 	"github.com/kyleu/libnpn/npncore"
 	"github.com/kyleu/libnpn/npnservice/auth"
 	"github.com/kyleu/libnpn/npnservice/user"
-	"logur.dev/logur"
 )
 
 type ServiceFS struct {
@@ -14,15 +14,13 @@ type ServiceFS struct {
 	enabledProviders auth.Providers
 	redir            string
 	files            npncore.FileLoader
-	logger           logur.Logger
+	logger           *logrus.Logger
 	users            user.Service
 }
 
 var _ auth.Service = (*ServiceFS)(nil)
 
-func NewServiceFS(enabled bool, redir string, files npncore.FileLoader, logger logur.Logger, users user.Service) auth.Service {
-	logger = logur.WithFields(logger, map[string]interface{}{npncore.KeyService: npncore.KeyAuth})
-
+func NewServiceFS(enabled bool, redir string, files npncore.FileLoader, logger *logrus.Logger, users user.Service) auth.Service {
 	if !strings.HasPrefix(redir, "http") {
 		redir = "https://" + redir
 	}

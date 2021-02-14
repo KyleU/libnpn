@@ -1,15 +1,13 @@
 package authdb
 
 import (
+	"github.com/sirupsen/logrus"
 	"strings"
 
 	"github.com/kyleu/libnpn/npnservice/auth"
 
-	"github.com/kyleu/libnpn/npncore"
 	"github.com/kyleu/libnpn/npndatabase"
 	"github.com/kyleu/libnpn/npnservice/user"
-
-	"logur.dev/logur"
 )
 
 type ServiceDatabase struct {
@@ -17,15 +15,13 @@ type ServiceDatabase struct {
 	enabledProviders auth.Providers
 	redir            string
 	db               *npndatabase.Service
-	logger           logur.Logger
+	logger           *logrus.Logger
 	users            user.Service
 }
 
 var _ auth.Service = (*ServiceDatabase)(nil)
 
-func NewServiceDatabase(enabled bool, redir string /* actions *action.Service, */, db *npndatabase.Service, logger logur.Logger, users user.Service) auth.Service {
-	logger = logur.WithFields(logger, map[string]interface{}{npncore.KeyService: npncore.KeyAuth})
-
+func NewServiceDatabase(enabled bool, redir string /* actions *action.Service, */, db *npndatabase.Service, logger *logrus.Logger, users user.Service) auth.Service {
 	if !strings.HasPrefix(redir, "http") {
 		redir = "https://" + redir
 	}

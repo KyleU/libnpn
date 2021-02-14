@@ -3,6 +3,7 @@ package npnconnection
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"sync"
 
 	"github.com/kyleu/libnpn/npnuser"
@@ -10,7 +11,6 @@ import (
 	"github.com/kyleu/libnpn/npncore"
 
 	"github.com/gofrs/uuid"
-	"logur.dev/logur"
 )
 
 // Function used to handle incoming messages
@@ -25,7 +25,7 @@ type Service struct {
 	connectionsMu sync.Mutex
 	channels      map[string]*Channel
 	channelsMu    sync.Mutex
-	Logger        logur.Logger
+	Logger        *logrus.Logger
 	onOpen        ConnectEvent
 	handler       Handler
 	onClose       ConnectEvent
@@ -34,8 +34,7 @@ type Service struct {
 }
 
 // Creates a new service with the provided handler functions
-func NewService(logger logur.Logger, onOpen ConnectEvent, handler Handler, onClose ConnectEvent, ctx interface{}) *Service {
-	logger = logur.WithFields(logger, map[string]interface{}{npncore.KeyService: npncore.KeySocket})
+func NewService(logger *logrus.Logger, onOpen ConnectEvent, handler Handler, onClose ConnectEvent, ctx interface{}) *Service {
 	return &Service{
 		connections: make(map[uuid.UUID]*Connection),
 		channels:    make(map[string]*Channel),

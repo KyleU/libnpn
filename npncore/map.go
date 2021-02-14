@@ -2,17 +2,17 @@ package npncore
 
 import (
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"sort"
 	"strings"
 
 	"github.com/gofrs/uuid"
-	"logur.dev/logur"
 
 	"emperror.dev/errors"
 )
 
 // Returns the value associated to the key in the provided map, logging a detailed message and returning nil if not found
-func GetEntry(m map[string]interface{}, key string, logger logur.Logger) interface{} {
+func GetEntry(m map[string]interface{}, key string, logger *logrus.Logger) interface{} {
 	retEntry, ok := m[key]
 	if !ok {
 		if logger != nil {
@@ -29,7 +29,7 @@ func GetEntry(m map[string]interface{}, key string, logger logur.Logger) interfa
 }
 
 // Returns the string value associated to the key in the provided map, logging a detailed message and returning nil if not found or value is not a string
-func MapGetString(m map[string]interface{}, key string, logger logur.Logger) string {
+func MapGetString(m map[string]interface{}, key string, logger *logrus.Logger) string {
 	retEntry := GetEntry(m, key, logger)
 	ret, ok := retEntry.(string)
 	if !ok {
@@ -40,7 +40,7 @@ func MapGetString(m map[string]interface{}, key string, logger logur.Logger) str
 }
 
 // Returns the bool value associated to the key in the provided map, logging a detailed message and returning nil if not found or value is not a boolean
-func MapGetBool(m map[string]interface{}, key string, logger logur.Logger) bool {
+func MapGetBool(m map[string]interface{}, key string, logger *logrus.Logger) bool {
 	retEntry := GetEntry(m, key, logger)
 	ret, ok := retEntry.(bool)
 	if !ok {
@@ -51,7 +51,7 @@ func MapGetBool(m map[string]interface{}, key string, logger logur.Logger) bool 
 }
 
 // Returns the UUID value associated to the key in the provided map, logging a detailed message and returning nil if not found or value is not a UUID
-func MapGetUUID(m map[string]interface{}, key string, logger logur.Logger) *uuid.UUID {
+func MapGetUUID(m map[string]interface{}, key string, logger *logrus.Logger) *uuid.UUID {
 	retEntry := GetEntry(m, key, logger)
 	ret, ok := retEntry.(uuid.UUID)
 	if !ok {

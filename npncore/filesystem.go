@@ -2,6 +2,7 @@ package npncore
 
 import (
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"io/ioutil"
 	"os"
 	"path"
@@ -9,19 +10,18 @@ import (
 	"strings"
 
 	"emperror.dev/errors"
-	"logur.dev/logur"
 )
 
 // Implements `FileLoader` for local filesystem access
 type FileSystem struct {
 	root   string
-	logger logur.Logger
+	logger *logrus.Logger
 }
 
 var _ FileLoader = (*FileSystem)(nil)
 
 // Constructor
-func NewFileSystem(root string, logger logur.Logger) *FileSystem {
+func NewFileSystem(root string, logger *logrus.Logger) *FileSystem {
 	return &FileSystem{root: root, logger: logger}
 }
 

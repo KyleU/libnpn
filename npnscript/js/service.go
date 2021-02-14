@@ -2,17 +2,17 @@ package js
 
 import (
 	"fmt"
+	"github.com/sirupsen/logrus"
 
 	"github.com/robertkrimen/otto"
-	"logur.dev/logur"
 )
 
 type Service struct {
 	ot     *otto.Otto
-	logger logur.Logger
+	logger *logrus.Logger
 }
 
-func NewService(logger logur.Logger) *Service {
+func NewService(logger *logrus.Logger) *Service {
 	ot := otto.New()
 	return &Service{ot: ot, logger: logger}
 }

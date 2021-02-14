@@ -2,14 +2,12 @@ package npndatabase
 
 import (
 	"fmt"
-
-	"github.com/kyleu/libnpn/npncore"
+	"github.com/sirupsen/logrus"
 
 	"emperror.dev/errors"
 	// load postgres driver
 	_ "github.com/jackc/pgx/v4/stdlib"
 	"github.com/jmoiron/sqlx"
-	"logur.dev/logur"
 )
 
 // Parameters used to start a database connection
@@ -20,13 +18,11 @@ type DBParams struct {
 	Debug    bool
 	Wipe     bool
 	Migrate  bool
-	Logger   logur.Logger
+	Logger   *logrus.Logger
 }
 
 // Opens a database connection pool
 func OpenDatabase(params DBParams) (*Service, error) {
-	params.Logger = logur.WithFields(params.Logger, map[string]interface{}{npncore.KeySvc: "database"})
-
 	host := "localhost"
 	port := 5432
 	user := params.Username

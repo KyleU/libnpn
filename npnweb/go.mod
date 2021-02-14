@@ -10,7 +10,6 @@ require (
 	github.com/gorilla/mux v1.7.4
 	github.com/mitchellh/mapstructure v1.1.2
 	github.com/gorilla/sessions v1.2.0
-	logur.dev/logur v0.16.2
 )
 
 replace github.com/kyleu/libnpn/npncore => ../npncore

@@ -3,6 +3,7 @@ package npngraphql
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -14,7 +15,6 @@ import (
 	"github.com/kyleu/libnpn/npncore"
 	"github.com/kyleu/libnpn/npnweb"
 
-	"logur.dev/logur"
 
 	"emperror.dev/errors"
 	"github.com/graphql-go/graphql"
@@ -80,11 +80,11 @@ func run(w http.ResponseWriter, r *http.Request, ctx *npnweb.RequestContext) (st
 	return graphQLResponse(w, res, ctx.Logger)
 }
 
-func graphQLResponse(w http.ResponseWriter, res *graphql.Result, logger logur.Logger) (string, error) {
+func graphQLResponse(w http.ResponseWriter, res *graphql.Result, logger *logrus.Logger) (string, error) {
 	return npncontroller.RespondJSON(w, "", res, logger)
 }
 
-func mapGetMap(m map[string]interface{}, key string, logger logur.Logger) map[string]interface{} {
+func mapGetMap(m map[string]interface{}, key string, logger *logrus.Logger) map[string]interface{} {
 	retEntry := npncore.GetEntry(m, key, logger)
 	ret, ok := retEntry.(map[string]interface{})
 	if !ok {

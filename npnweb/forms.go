@@ -3,15 +3,15 @@ package npnweb
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"net/http"
 	"strings"
 
 	"emperror.dev/errors"
 	"github.com/mitchellh/mapstructure"
-	"logur.dev/logur"
 )
 
-func Decode(r *http.Request, tgt interface{}, logger logur.Logger) error {
+func Decode(r *http.Request, tgt interface{}, logger *logrus.Logger) error {
 	_ = r.ParseForm()
 	frm := make(map[string]interface{}, len(r.Form))
 	for k, v := range r.Form {

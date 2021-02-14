@@ -3,6 +3,7 @@ package userdb
 import (
 	"database/sql"
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"time"
 
 	"github.com/kyleu/libnpn/npnservice/user"
@@ -12,18 +13,16 @@ import (
 	"github.com/kyleu/libnpn/npnuser"
 
 	"github.com/gofrs/uuid"
-	"logur.dev/logur"
 )
 
 type ServiceDatabase struct {
 	db     *npndatabase.Service
-	logger logur.Logger
+	logger *logrus.Logger
 }
 
 var _ user.Service = (*ServiceDatabase)(nil)
 
-func NewServiceDatabase(db *npndatabase.Service, logger logur.Logger) user.Service {
-	logger = logur.WithFields(logger, map[string]interface{}{npncore.KeyService: npncore.KeyUser})
+func NewServiceDatabase(db *npndatabase.Service, logger *logrus.Logger) user.Service {
 	return &ServiceDatabase{db: db, logger: logger}
 }
 

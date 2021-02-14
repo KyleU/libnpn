@@ -4,22 +4,21 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-
-	"logur.dev/logur"
+	"github.com/sirupsen/logrus"
 )
 
 // Converts the argument to a string containing pretty JSON, logging errors
-func ToJSON(x interface{}, logger logur.Logger) string {
+func ToJSON(x interface{}, logger *logrus.Logger) string {
 	return string(ToJSONBytes(x, logger, true))
 }
 
 // Converts the argument to a string containing compact JSON, logging errors
-func ToJSONCompact(x interface{}, logger logur.Logger) string {
+func ToJSONCompact(x interface{}, logger *logrus.Logger) string {
 	return string(ToJSONBytes(x, logger, false))
 }
 
 // Converts the argument to an optionally indented byte array, logging errors
-func ToJSONBytes(x interface{}, logger logur.Logger, indent bool) []byte {
+func ToJSONBytes(x interface{}, logger *logrus.Logger, indent bool) []byte {
 	var b []byte
 	var err error
 	if indent {

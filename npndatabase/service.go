@@ -2,24 +2,23 @@ package npndatabase
 
 import (
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"sort"
 	"strings"
 
 	"github.com/jmoiron/sqlx"
 	"github.com/kyleu/libnpn/npncore"
-	"logur.dev/logur"
 )
 
 // Database access service
 type Service struct {
 	debug  bool
 	db     *sqlx.DB
-	logger logur.Logger
+	logger *logrus.Logger
 }
 
 // Returns a fresh Service
-func NewService(debug bool, db *sqlx.DB, logger logur.Logger) *Service {
-	logger = logur.WithFields(logger, map[string]interface{}{"service": "db"})
+func NewService(debug bool, db *sqlx.DB, logger *logrus.Logger) *Service {
 	return &Service{debug: debug, db: db, logger: logger}
 }
 

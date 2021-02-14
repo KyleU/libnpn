@@ -3,17 +3,17 @@ package npncore
 import (
 	"bytes"
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"io"
 	"os"
 	"os/exec"
 	"strings"
 
 	"emperror.dev/errors"
-	"logur.dev/logur"
 )
 
 // Runs a provided command, redirecting output and returning the exit code
-func RunProcess(cmd string, path string, logger logur.Logger, in io.Reader, out io.Writer, er io.Writer) (int, error) {
+func RunProcess(cmd string, path string, logger *logrus.Logger, in io.Reader, out io.Writer, er io.Writer) (int, error) {
 	logger.Info(fmt.Sprintf("Running [" + cmd + "] in [" + path + "]"))
 
 	args := strings.Split(cmd, " ")
@@ -54,7 +54,7 @@ func RunProcess(cmd string, path string, logger logur.Logger, in io.Reader, out 
 }
 
 // Runs a provided command, returning the exit code and string output
-func RunProcessSimple(cmd string, path string, logger logur.Logger) (int, string, error) {
+func RunProcessSimple(cmd string, path string, logger *logrus.Logger) (int, string, error) {
 	var buf bytes.Buffer
 	ec, err := RunProcess(cmd, path, logger, nil, &buf, &buf)
 	if err != nil {

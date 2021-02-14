@@ -1,16 +1,16 @@
 package lua
 
 import (
+	"github.com/sirupsen/logrus"
 	lua "github.com/yuin/gopher-lua"
-	"logur.dev/logur"
 )
 
 type Service struct {
 	l      *lua.LState
-	logger logur.Logger
+	logger *logrus.Logger
 }
 
-func NewService(logger logur.Logger) *Service {
+func NewService(logger *logrus.Logger) *Service {
 	opts := lua.Options{
 		SkipOpenLibs:        true,
 		IncludeGoStackTrace: true,

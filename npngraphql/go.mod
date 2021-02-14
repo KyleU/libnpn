@@ -6,7 +6,6 @@ require (
 	github.com/graphql-go/graphql v0.7.9
 	github.com/kyleu/libnpn/npnweb v0.0.1 // npn
 	github.com/kyleu/libnpn/npncontroller v0.0.1 // npn
-	logur.dev/logur v0.16.2
 )
 
 replace github.com/kyleu/libnpn/npnconnection => ../npnconnection

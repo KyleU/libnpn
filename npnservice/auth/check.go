@@ -2,10 +2,10 @@ package auth
 
 import (
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"strings"
 
 	"github.com/gofrs/uuid"
-	"logur.dev/logur"
 )
 
 var (
@@ -16,7 +16,7 @@ var (
 )
 
 // Checks if the provided user can sign in to the app
-func Check(s Service, userID uuid.UUID, logger logur.Logger) bool {
+func Check(s Service, userID uuid.UUID, logger *logrus.Logger) bool {
 	if (len(RequiredAuthProviders) == 0) && (len(RequiredAuthDomains) == 0) {
 		return true
 	}

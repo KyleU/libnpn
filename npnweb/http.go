@@ -2,14 +2,13 @@ package npnweb
 
 import (
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"os"
 	"strings"
 
 	"emperror.dev/errors"
 
 	"github.com/gorilla/mux"
-	"logur.dev/logur"
-
 	"github.com/gorilla/sessions"
 )
 
@@ -59,7 +58,7 @@ func ParseFlash(s string) (string, string) {
 	}
 }
 
-func Route(routes *mux.Router, logger logur.Logger, act string, pairs ...string) string {
+func Route(routes *mux.Router, logger *logrus.Logger, act string, pairs ...string) string {
 	route := routes.Get(act)
 	if route == nil {
 		msg := "cannot find route at path [" + act + "]"

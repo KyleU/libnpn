@@ -5,13 +5,13 @@ package npntemplate
 
 import (
 	"bytes"
+	"github.com/sirupsen/logrus"
 
 	"github.com/kyleu/libnpn/npncore"
 	"github.com/shiyanhui/hero"
-	"logur.dev/logur"
 )
 
-func DebugPanel(t interface{}, logger logur.Logger, buffer *bytes.Buffer) {
+func DebugPanel(t interface{}, logger *logrus.Logger, buffer *bytes.Buffer) {
 	buffer.WriteString(`
 <div class="mt">
   <a href="" onclick="this.nextElementSibling.style.display = 'block';return false;">JSON</a>

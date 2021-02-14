@@ -2,6 +2,7 @@ package npnweb
 
 import (
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"net/http"
 	"net/url"
 
@@ -11,12 +12,11 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
-	"logur.dev/logur"
 )
 
 type RequestContext struct {
 	App         AppInfo
-	Logger      logur.Logger
+	Logger      *logrus.Logger
 	Profile     *npnuser.UserProfile
 	Routes      *mux.Router
 	Request     *url.URL
@@ -69,11 +69,9 @@ func ExtractContext(w http.ResponseWriter, r *http.Request, addIfMissing bool) *
 		flashes = append(flashes, fmt.Sprint(f))
 	}
 
-	logger := logur.WithFields(ai.Logger(), map[string]interface{}{"path": r.URL.Path, "method": r.Method})
-
 	return &RequestContext{
 		App:         ai,
-		Logger:      logger,
+		Logger:      ai.Logger(),
 		Profile:     prof,
 		Routes:      routes,
 		Request:     r.URL,
@@ -84,7 +82,7 @@ func ExtractContext(w http.ResponseWriter, r *http.Request, addIfMissing bool) *
 	}
 }
 
-func SetSessionUser(userID uuid.UUID, session *sessions.Session, r *http.Request, w http.ResponseWriter, logger logur.Logger) uuid.UUID {
+func SetSessionUser(userID uuid.UUID, session *sessions.Session, r *http.Request, w http.ResponseWriter, logger *logrus.Logger) uuid.UUID {
 	session.Values[npncore.KeyUser] = userID.String()
 	session.Options = &sessions.Options{Path: "/", HttpOnly: true, SameSite: http.SameSiteStrictMode}
 	err := session.Save(r, w)

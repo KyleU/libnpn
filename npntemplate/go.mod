@@ -11,7 +11,6 @@ require (
 	github.com/kyleu/libnpn/npnuser v0.0.1 // npn
 	github.com/kyleu/libnpn/npnweb v0.0.1 // npn
 	github.com/shiyanhui/hero v0.0.2
-	logur.dev/logur v0.16.2
 )
 
 replace github.com/kyleu/libnpn/npnconnection => ../npnconnection

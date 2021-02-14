@@ -2,6 +2,7 @@ package npncontroller
 
 import (
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"net/http"
 	"strings"
 	"time"
@@ -10,7 +11,6 @@ import (
 	"github.com/kyleu/libnpn/npncore"
 	"github.com/kyleu/libnpn/npnweb"
 	"golang.org/x/text/language"
-	"logur.dev/logur"
 )
 
 // Used by RespondJSON
@@ -51,7 +51,7 @@ func ENew(msg string) (string, error) {
 }
 
 // Serialize body to JSON, and respond with correct MIME type
-func RespondJSON(w http.ResponseWriter, filename string, body interface{}, logger logur.Logger) (string, error) {
+func RespondJSON(w http.ResponseWriter, filename string, body interface{}, logger *logrus.Logger) (string, error) {
 	return RespondMIME(filename, "application/json", "json", npncore.ToJSONBytes(body, logger, true), w)
 }
 

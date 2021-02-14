@@ -5,13 +5,13 @@ package npntemplate
 
 import (
 	"bytes"
+	"github.com/sirupsen/logrus"
 
 	"github.com/kyleu/libnpn/npncore"
 	"github.com/shiyanhui/hero"
-	"logur.dev/logur"
 )
 
-func JSON(t interface{}, logger logur.Logger, buffer *bytes.Buffer) {
+func JSON(t interface{}, logger *logrus.Logger, buffer *bytes.Buffer) {
 	buffer.WriteString(`
 <pre><code>`)
 	hero.EscapeHTML(npncore.ToJSON(t, logger), buffer)

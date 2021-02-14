@@ -2,10 +2,10 @@ package npncore
 
 import (
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"strings"
 
 	"emperror.dev/errors"
-	"logur.dev/logur"
 )
 
 var defaultPrefix = "{"
@@ -22,7 +22,7 @@ func MergeNeeded(key string) bool {
 }
 
 // Calls `Merge`, logging errors to the provided logger, including the provided key
-func MergeLog(key string, content string, args Data, logger logur.Logger) string {
+func MergeLog(key string, content string, args Data, logger *logrus.Logger) string {
 	x, err := Merge(content, args)
 	if err != nil {
 		logger.Warn(fmt.Sprintf("unable to merge [%v] %+v", key, err))

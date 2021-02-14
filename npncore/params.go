@@ -2,9 +2,8 @@ package npncore
 
 import (
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"strings"
-
-	"logur.dev/logur"
 )
 
 // A map with arbitrary string keys associated to a string array containing all allowed columns
@@ -102,7 +101,7 @@ func (p *Params) OrderByString() string {
 }
 
 // Filters this Params, limiting columns to those matching the AllowedColumns
-func (p *Params) Filtered(logger logur.Logger) *Params {
+func (p *Params) Filtered(logger *logrus.Logger) *Params {
 	if len(p.Orderings) > 0 {
 		allowed := make(Orderings, 0)
 

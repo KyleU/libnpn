@@ -2,13 +2,13 @@ package npndatabase
 
 import (
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"strings"
 
 	"github.com/kyleu/libnpn/npncore"
 
 	"emperror.dev/errors"
 	"golang.org/x/text/language"
-	"logur.dev/logur"
 )
 
 type MigrationFile struct {
@@ -24,7 +24,7 @@ var InitialSchemaMigrations = MigrationFiles{}
 // Set this in your application's startup, it's used as the store for all migrations, call by Migrate
 var DatabaseMigrations = MigrationFiles{}
 
-func exec(file *MigrationFile, s *Service, logger logur.Logger) (string, error) {
+func exec(file *MigrationFile, s *Service, logger *logrus.Logger) (string, error) {
 	sb := &strings.Builder{}
 	file.F(sb)
 	sql := sb.String()

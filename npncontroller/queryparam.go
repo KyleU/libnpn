@@ -1,10 +1,9 @@
 package npncontroller
 
 import (
+	"github.com/sirupsen/logrus"
 	"net/url"
 	"strings"
-
-	"logur.dev/logur"
 
 	"github.com/kyleu/libnpn/npncore"
 )
@@ -22,7 +21,7 @@ func (q *QueryParam) String() string {
 }
 
 // Returns a cloned QueryParam with the provided data used as overrides
-func (q *QueryParam) Merge(data npncore.Data, logger logur.Logger) *QueryParam {
+func (q *QueryParam) Merge(data npncore.Data, logger *logrus.Logger) *QueryParam {
 	return &QueryParam{
 		Key:         npncore.MergeLog("query."+q.Key+".key", q.Key, data, logger),
 		Value:       npncore.MergeLog("query."+q.Key+".value", q.Value, data, logger),
@@ -48,7 +47,7 @@ func (q QueryParams) String() string {
 }
 
 // Returns a cloned QueryParams with the provided data used as overrides
-func (q QueryParams) Merge(data npncore.Data, logger logur.Logger) QueryParams {
+func (q QueryParams) Merge(data npncore.Data, logger *logrus.Logger) QueryParams {
 	ret := make(QueryParams, 0, len(q))
 	for _, qp := range q {
 		ret = append(ret, qp.Merge(data, logger))

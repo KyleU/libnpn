@@ -2,6 +2,7 @@ package userfs
 
 import (
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"time"
 
 	"github.com/kyleu/libnpn/npnservice/user"
@@ -12,7 +13,6 @@ import (
 	"github.com/kyleu/libnpn/npnuser"
 
 	"github.com/gofrs/uuid"
-	"logur.dev/logur"
 )
 
 var systemUser = &user.SystemUser{
@@ -28,13 +28,12 @@ var systemUser = &user.SystemUser{
 type ServiceFilesystem struct {
 	Multiuser bool
 	files     npncore.FileLoader
-	logger    logur.Logger
+	logger    *logrus.Logger
 }
 
 var _ user.Service = (*ServiceFilesystem)(nil)
 
-func NewServiceFilesystem(multiuser bool, files npncore.FileLoader, logger logur.Logger) *ServiceFilesystem {
-	logger = logur.WithFields(logger, map[string]interface{}{npncore.KeyService: npncore.KeyUser})
+func NewServiceFilesystem(multiuser bool, files npncore.FileLoader, logger *logrus.Logger) *ServiceFilesystem {
 	return &ServiceFilesystem{Multiuser: multiuser, files: files, logger: logger}
 }
 

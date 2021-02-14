@@ -2,15 +2,15 @@ package npndatabase
 
 import (
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"strings"
 	"time"
 
 	"emperror.dev/errors"
-	"logur.dev/logur"
 )
 
 // Wipes the database, probably
-func DBWipe(s *Service, logger logur.Logger) error {
+func DBWipe(s *Service, logger *logrus.Logger) error {
 	for _, file := range InitialSchemaMigrations {
 		_, err := exec(file, s, logger)
 		if err != nil {

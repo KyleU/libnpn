@@ -2,18 +2,18 @@ package npngraphql
 
 import (
 	"fmt"
+	"github.com/sirupsen/logrus"
 
 	"github.com/kyleu/libnpn/npncore"
 	"github.com/kyleu/libnpn/npnweb"
 
 	"github.com/graphql-go/graphql"
 	"github.com/graphql-go/graphql/gqlerrors"
-	"logur.dev/logur"
 )
 
 type Callback func(p graphql.ResolveParams, ctx *npnweb.RequestContext) (interface{}, error)
 
-func ParamSetFromGraphQLParams(key string, params graphql.ResolveParams, logger logur.Logger) *npncore.Params {
+func ParamSetFromGraphQLParams(key string, params graphql.ResolveParams, logger *logrus.Logger) *npncore.Params {
 	orderings := make(npncore.Orderings, 0)
 	o, ok := params.Args["orders"]
 	if ok {
@@ -42,7 +42,7 @@ func ParamSetFromGraphQLParams(key string, params graphql.ResolveParams, logger 
 	return ret.Filtered(logger)
 }
 
-func ErrorResponseJSON(logger logur.Logger, errors ...error) *graphql.Result {
+func ErrorResponseJSON(logger *logrus.Logger, errors ...error) *graphql.Result {
 	var errs = make([]gqlerrors.FormattedError, 0, len(errors))
 
 	for _, err := range errors {

@@ -7,7 +7,6 @@ import (
 
 	"github.com/Shopify/sarama"
 	"github.com/sirupsen/logrus"
-	"logur.dev/logur"
 )
 
 // A queue consumer, for reading messages
@@ -20,11 +19,11 @@ type Consumer struct {
 	Config  *sarama.Config
 	Count   int
 	Last    time.Time
-	logger  logur.Logger
+	logger  *logrus.Logger
 }
 
 // Creates a new Consumer from the provided ConsumeHelper
-func NewConsumer(cfg *Config, group string, handler *ConsumeHelper, logger logur.Logger, logr *logrus.Logger) (*Consumer, error) {
+func NewConsumer(cfg *Config, group string, handler *ConsumeHelper, logger *logrus.Logger, logr *logrus.Logger) (*Consumer, error) {
 	config := makeSaramaConfig(cfg.Secure, cfg.Username, cfg.Password, cfg.Secure, cfg.Verbose, logr)
 	r, err := sarama.NewConsumerGroup(cfg.Addrs, group, config)
 	if err != nil {

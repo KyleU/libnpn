@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"github.com/kyleu/libnpn/npngraphql"
 	"os"
 
 	"github.com/kyleu/libnpn/npnscript/js"
@@ -28,6 +29,8 @@ func main() {
 	npncontroller.InitMime()
 
 	_ = npncore.ErrorDetail{}
+
+	_ = npngraphql.Service{}
 
 	_ = npnuser.Profile{}
 

@@ -3,18 +3,17 @@ package npngraphql
 import (
 	"context"
 	"fmt"
+	"github.com/sirupsen/logrus"
 
 	"github.com/kyleu/libnpn/npncore"
 	"github.com/kyleu/libnpn/npnweb"
 
 	"emperror.dev/errors"
-	"logur.dev/logur"
-
 	"github.com/graphql-go/graphql"
 )
 
 type Service struct {
-	Logger logur.Logger
+	Logger *logrus.Logger
 	cfg    graphql.SchemaConfig
 	schema graphql.Schema
 	app    npnweb.AppInfo
@@ -23,8 +22,6 @@ type Service struct {
 var graphQLService *Service
 
 func NewService(app npnweb.AppInfo, queryName string, queries graphql.Fields, mutationName string, mutations graphql.Fields) (*Service, error) {
-	logger := logur.WithFields(app.Logger(), map[string]interface{}{npncore.KeyService: npncore.KeyGraphQL})
-
 	gqlQueryName = queryName
 	gqlMutationName = mutationName
 
@@ -40,9 +37,9 @@ func NewService(app npnweb.AppInfo, queryName string, queries graphql.Fields, mu
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to create new schema")
 	}
-	svc := Service{Logger: logger, cfg: schemaConfig, schema: schema, app: app}
+	svc := Service{Logger: app.Logger(), cfg: schemaConfig, schema: schema, app: app}
 
-	logger.Debug("initialized GraphQL service")
+	app.Logger().Debug("initialized GraphQL service")
 	graphQLService = &svc
 	return &svc, nil
 }

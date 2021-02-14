@@ -1,16 +1,15 @@
 package npncore
 
 import (
+	"github.com/sirupsen/logrus"
 	"strings"
-
-	"logur.dev/logur"
 )
 
 // A map of string keys to Params
 type ParamSet map[string]*Params
 
 // Gets the Params matching the provided key
-func (s ParamSet) Get(key string, logger logur.Logger) *Params {
+func (s ParamSet) Get(key string, logger *logrus.Logger) *Params {
 	x, ok := s[key]
 	if !ok {
 		return &Params{Key: key}
