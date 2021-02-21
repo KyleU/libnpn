@@ -1,6 +1,6 @@
 module github.com/kyleu/libnpn/npnservice
 
-go 1.15
+go 1.16
 
 require (
 	github.com/kyleu/libnpn/npncore v0.0.1 // npn

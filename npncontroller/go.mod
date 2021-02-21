@@ -1,6 +1,6 @@
 module github.com/kyleu/libnpn/npncontroller
 
-go 1.15
+go 1.16
 
 require (
 	github.com/kyleu/libnpn/npnconnection v0.0.1 // npn
