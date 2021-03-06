@@ -28,15 +28,10 @@ func exec(file *MigrationFile, s *Service, logger *logrus.Logger) (string, error
 	sb := &strings.Builder{}
 	file.F(sb)
 	sql := sb.String()
-	sqls := strings.Split(sql, ";")
 	startNanos := npncore.TimerStart()
-	for _, q := range sqls {
-		if len(strings.TrimSpace(strings.TrimSuffix(strings.TrimSpace(q), "--"))) > 0 {
-			_, err := s.Exec(q, nil, -1)
-			if err != nil {
-				return "", errors.Wrap(err, "cannot execute ["+file.Title+"]")
-			}
-		}
+	_, err := s.Exec(sql, nil, -1)
+	if err != nil {
+		return "", errors.Wrap(err, "cannot execute ["+file.Title+"]")
 	}
 	ms := npncore.MicrosToMillis(language.AmericanEnglish, npncore.TimerEnd(startNanos))
 	logger.Debug(fmt.Sprintf("ran query [%s] in [%v]", file.Title, ms))
