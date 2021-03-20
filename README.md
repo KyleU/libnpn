@@ -49,7 +49,7 @@ Service interfaces for user management and OAuth
 Service interface for user management and security
 
 #### [/auth](npnservice/auth)
-Service interface for OAuth, handles Amazon, Facebook, Github, Google, Microsoft, and Slack
+Service interface for OAuth, handles Amazon, Facebook, GitHub, Google, Microsoft, and Slack
 
 ### [npnservice-db](npnservice-db)
 Service implementations for user management and OAuth using PostgreSQL

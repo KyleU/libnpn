@@ -1,2 +1,2 @@
-// Service interface for OAuth, handles Amazon, Facebook, Github, Google, Microsoft, and Slack
+// Service interface for OAuth, handles Amazon, Facebook, GitHub, Google, Microsoft, and Slack
 package auth

@@ -22,7 +22,7 @@ type githubUser struct {
 func githubAuth(tok *oauth2.Token) (*Record, error) {
 	contents, err := callHTTP("https://api.github.com/user", tok.AccessToken)
 	if err != nil {
-		return nil, errors.Wrap(err, "error reading Github response")
+		return nil, errors.Wrap(err, "error reading GitHub response")
 	}
 
 	var user = githubUser{}
