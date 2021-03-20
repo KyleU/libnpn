@@ -2,6 +2,7 @@ package npnweb
 
 import (
 	"fmt"
+	"github.com/kyleu/libnpn/npnservice/user"
 	"github.com/sirupsen/logrus"
 	"net/http"
 	"net/url"
@@ -56,7 +57,11 @@ func ExtractContext(w http.ResponseWriter, r *http.Request, addIfMissing bool) *
 		userID = SetSessionUser(npncore.UUID(), session, r, w, ai.Logger())
 	}
 
-	u := ai.User().GetByID(userID, addIfMissing)
+	var u *user.SystemUser
+	us := ai.User()
+	if us != nil {
+		u = ai.User().GetByID(userID, addIfMissing)
+	}
 	var prof *npnuser.UserProfile
 	if u == nil {
 		prof = npnuser.NewUserProfile(userID, "")

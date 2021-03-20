@@ -15,5 +15,4 @@ type AppInfo interface {
 	Logger() *logrus.Logger
 	Valid() bool
 	Public() bool
-	Secret() string
 }
