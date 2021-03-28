@@ -5,10 +5,10 @@ package npntemplate
 
 import (
 	"bytes"
-	"github.com/sirupsen/logrus"
 
 	"github.com/kyleu/libnpn/npncore"
 	"github.com/shiyanhui/hero"
+	"github.com/sirupsen/logrus"
 )
 
 func DebugPanel(t interface{}, logger *logrus.Logger, buffer *bytes.Buffer) {

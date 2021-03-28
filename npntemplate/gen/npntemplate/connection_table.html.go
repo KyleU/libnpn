@@ -15,7 +15,6 @@ import (
 func ConnectionTable(connections npnconnection.Statuses, params *npncore.Params, ctx *npnweb.RequestContext, buffer *bytes.Buffer) {
 	buffer.WriteString(`
 <table class="uk-table uk-table-divider uk-text-left">
-  <caption class="hidden">connection</caption>
   <thead>
     <tr>
       `)

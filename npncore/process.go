@@ -3,11 +3,12 @@ package npncore
 import (
 	"bytes"
 	"fmt"
-	"github.com/sirupsen/logrus"
 	"io"
 	"os"
 	"os/exec"
 	"strings"
+
+	"github.com/sirupsen/logrus"
 
 	"emperror.dev/errors"
 )

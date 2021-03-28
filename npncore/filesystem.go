@@ -2,12 +2,13 @@ package npncore
 
 import (
 	"fmt"
-	"github.com/sirupsen/logrus"
 	"io/ioutil"
 	"os"
 	"path"
 	"path/filepath"
 	"strings"
+
+	"github.com/sirupsen/logrus"
 
 	"emperror.dev/errors"
 )

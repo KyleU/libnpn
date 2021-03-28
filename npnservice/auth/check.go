@@ -2,8 +2,9 @@ package auth
 
 import (
 	"fmt"
-	"github.com/sirupsen/logrus"
 	"strings"
+
+	"github.com/sirupsen/logrus"
 
 	"github.com/gofrs/uuid"
 )

@@ -1,8 +1,9 @@
 package npncore
 
 import (
-	"github.com/sirupsen/logrus"
 	"os"
+
+	"github.com/sirupsen/logrus"
 )
 
 // Initializes the logging subsystem

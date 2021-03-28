@@ -2,9 +2,10 @@ package npndatabase
 
 import (
 	"fmt"
-	"github.com/sirupsen/logrus"
 	"sort"
 	"strings"
+
+	"github.com/sirupsen/logrus"
 
 	"github.com/jmoiron/sqlx"
 	"github.com/kyleu/libnpn/npncore"

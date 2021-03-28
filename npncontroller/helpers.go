@@ -2,10 +2,11 @@ package npncontroller
 
 import (
 	"fmt"
-	"github.com/sirupsen/logrus"
 	"net/http"
 	"strings"
 	"time"
+
+	"github.com/sirupsen/logrus"
 
 	"emperror.dev/errors"
 	"github.com/kyleu/libnpn/npncore"

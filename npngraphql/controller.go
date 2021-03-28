@@ -3,10 +3,11 @@ package npngraphql
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/sirupsen/logrus"
 	"io"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/sirupsen/logrus"
 
 	"github.com/gorilla/mux"
 	"github.com/kyleu/libnpn/npncontroller/routes"
@@ -14,7 +15,6 @@ import (
 	"github.com/kyleu/libnpn/npncontroller"
 	"github.com/kyleu/libnpn/npncore"
 	"github.com/kyleu/libnpn/npnweb"
-
 
 	"emperror.dev/errors"
 	"github.com/graphql-go/graphql"

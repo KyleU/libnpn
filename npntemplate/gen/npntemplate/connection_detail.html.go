@@ -50,7 +50,6 @@ func ConnectionDetail(model *npnconnection.Status, msg *npnconnection.Message, c
     <div class="uk-card uk-card-body uk-card-default">
       <h3 class="uk-card-title">Socket Connection</h3>
       <table class="uk-table uk-table-divider uk-text-left">
-        <caption class="hidden">socket list</caption>
         <tbody>
         <tr>
           <th scope="row">`)

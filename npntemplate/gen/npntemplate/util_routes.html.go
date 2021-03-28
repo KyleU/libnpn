@@ -48,7 +48,6 @@ func RoutesList(ctx *npnweb.RequestContext, w io.Writer) (int, error) {
   <div class="uk-container">
     <div class="uk-card uk-card-body uk-card-default">
       <table class="uk-table uk-table-divider uk-table-small">
-        <caption class="hidden">route listing</caption>
         <thead>
           <tr>
             <th scope="col">`)

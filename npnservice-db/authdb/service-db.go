@@ -1,8 +1,9 @@
 package authdb
 
 import (
-	"github.com/sirupsen/logrus"
 	"strings"
+
+	"github.com/sirupsen/logrus"
 
 	"github.com/kyleu/libnpn/npnservice/auth"
 

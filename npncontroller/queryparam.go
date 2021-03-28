@@ -1,9 +1,10 @@
 package npncontroller
 
 import (
-	"github.com/sirupsen/logrus"
 	"net/url"
 	"strings"
+
+	"github.com/sirupsen/logrus"
 
 	"github.com/kyleu/libnpn/npncore"
 )

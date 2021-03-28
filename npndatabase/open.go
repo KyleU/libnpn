@@ -2,6 +2,7 @@ package npndatabase
 
 import (
 	"fmt"
+
 	"github.com/sirupsen/logrus"
 
 	"emperror.dev/errors"

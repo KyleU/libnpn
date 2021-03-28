@@ -3,8 +3,9 @@ package npnconnection
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/sirupsen/logrus"
 	"sync"
+
+	"github.com/sirupsen/logrus"
 
 	"github.com/kyleu/libnpn/npnuser"
 

@@ -3,8 +3,9 @@ package userdb
 import (
 	"database/sql"
 	"fmt"
-	"github.com/sirupsen/logrus"
 	"time"
+
+	"github.com/sirupsen/logrus"
 
 	"github.com/kyleu/libnpn/npnservice/user"
 

@@ -18,7 +18,6 @@ func errorStack(ed *npncore.ErrorDetail, ctx *npnweb.RequestContext, buffer *byt
   <div class="mt">
     <div class="uk-card uk-card-body uk-card-default">
       <table class="uk-table uk-table-divider">
-        <caption class="hidden">error detail</caption>
         <tbody>
         `)
 		for _, f := range npncore.TraceDetail(ed.StackTrace) {

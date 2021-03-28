@@ -2,6 +2,7 @@ package js
 
 import (
 	"fmt"
+
 	"github.com/sirupsen/logrus"
 
 	"github.com/robertkrimen/otto"

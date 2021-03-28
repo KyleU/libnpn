@@ -2,9 +2,10 @@ package npncore
 
 import (
 	"fmt"
-	"github.com/sirupsen/logrus"
 	"sort"
 	"strings"
+
+	"github.com/sirupsen/logrus"
 
 	"github.com/gofrs/uuid"
 

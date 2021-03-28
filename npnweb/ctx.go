@@ -2,10 +2,11 @@ package npnweb
 
 import (
 	"fmt"
-	"github.com/kyleu/libnpn/npnservice/user"
-	"github.com/sirupsen/logrus"
 	"net/http"
 	"net/url"
+
+	"github.com/kyleu/libnpn/npnservice/user"
+	"github.com/sirupsen/logrus"
 
 	"github.com/gofrs/uuid"
 	"github.com/kyleu/libnpn/npncore"

@@ -50,7 +50,6 @@ func ModulesList(ctx *npnweb.RequestContext, w io.Writer) (int, error) {
 	_buffer.WriteString(`
     <div class="uk-card uk-card-body uk-card-default">
       <table class="uk-table uk-table-divider uk-table-small">
-        <caption class="hidden">module listing</caption>
         <thead>
           <tr>
             <th scope="col">`)

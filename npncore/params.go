@@ -2,8 +2,9 @@ package npncore
 
 import (
 	"fmt"
-	"github.com/sirupsen/logrus"
 	"strings"
+
+	"github.com/sirupsen/logrus"
 )
 
 // A map with arbitrary string keys associated to a string array containing all allowed columns

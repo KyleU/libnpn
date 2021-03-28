@@ -2,9 +2,10 @@ package npndatabase
 
 import (
 	"fmt"
-	"github.com/sirupsen/logrus"
 	"strings"
 	"time"
+
+	"github.com/sirupsen/logrus"
 
 	"emperror.dev/errors"
 )

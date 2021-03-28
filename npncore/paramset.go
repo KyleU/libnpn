@@ -1,8 +1,9 @@
 package npncore
 
 import (
-	"github.com/sirupsen/logrus"
 	"strings"
+
+	"github.com/sirupsen/logrus"
 )
 
 // A map of string keys to Params

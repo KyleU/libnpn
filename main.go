@@ -3,8 +3,9 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"github.com/kyleu/libnpn/npngraphql"
 	"os"
+
+	"github.com/kyleu/libnpn/npngraphql"
 
 	"github.com/kyleu/libnpn/npnscript/js"
 	"github.com/kyleu/libnpn/npnscript/lua"

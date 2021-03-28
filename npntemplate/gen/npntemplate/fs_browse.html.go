@@ -55,7 +55,6 @@ func FileBrowse(dir []string, files []os.FileInfo, ctx *npnweb.RequestContext, w
 	hero.EscapeHTML(strings.Join(dir, "/"), _buffer)
 	_buffer.WriteString(`</h3>
       <table class="uk-table uk-table-divider">
-        <caption class="hidden">file listing</caption>
         <thead>
           <tr>
             <th scope="col">Name</th>

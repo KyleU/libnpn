@@ -3,6 +3,7 @@ package npngraphql
 import (
 	"context"
 	"fmt"
+
 	"github.com/sirupsen/logrus"
 
 	"github.com/kyleu/libnpn/npncore"
